@@ -3,27 +3,6 @@
 #include <algorithm>
 using namespace std;
 
-double POWER_0(double x) { // (온도, 습도) low, low / low, mid 인 경우./ ax, ay
-	if (x < 10) return 1;
-	else if (x >= 10 && x < 30) return ((-x) + 30) / 20;
-	else return 0;
-}
-double POWER_40(double x) { // (온도, 습도) mid, low / low, high / bx, az
-	if (x > 0 && x < 20) return x / 20;
-	else if (x > 40 && x < 60) return ((-x) + 60) / 20;
-	else return 0;
-}
-double POWER_70(double x) { // (온도, 습도) mid, mid / mid, high / by, bz
-	if (x > 30 && x < 50) return (x - 30) / 20;
-	else if (x >= 50 && x <= 70) return 1;
-	else if (x > 70 && x < 90) return ((-x) + 90) / 20;
-	else return 0;
-}
-double POWER_100(double x) {// (온도, 습도)high, low / high, high/ high, mid / cx, cy, cz
-	if (x > 70 && x < 90) return (x - 70) / 20;
-	else return 1;
-}
-
 double TEMP_low(double x) { // 온도
 	if (x < 20) return 1;
 	else if (x >= 20 && x < 25) return ((-x) + 25) / 5;
@@ -67,6 +46,11 @@ int main() {
 	x = HUMID_low(humidity);
 	y = HUMID_mid(humidity);
 	z = HUMID_high(humidity);
+
+	//  0% : ax, ay
+	// 40% : bx, ax
+	// 70% : by, bz
+	//100% : cx, cy, cz
 
 	sum_top = (min(a, x) + min(a, y)) * 0 + (min(b, x) + min(a, z)) * 40 + (min(b, y) + min(b, z)) * 70 + (min(c, x) + min(c, y) + min(c, z)) * 100;
 	sum_bottom = min(a, x) + min(a, y) + min(b, x) + min(a, z) + min(b, y) + min(b, z) + min(c, x) + min(c, y) + min(c, z);
